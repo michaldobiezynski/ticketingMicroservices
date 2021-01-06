@@ -1,4 +1,5 @@
-import { errorHandler } from "./../middlewares/error.handlers";
+import { DatabaseConnectionError } from "./../errors/database-connection-error";
+import { RequestValidationError } from "./../errors/request-validation-error";
 import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
 
@@ -17,10 +18,11 @@ router.post(
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      throw new Error("Invalid email or password");
+      throw new RequestValidationError(errors.array());
     }
 
     const { email, password } = req.body;
+    throw new DatabaseConnectionError();
 
     console.log("Creating a user...");
     res.send({});
