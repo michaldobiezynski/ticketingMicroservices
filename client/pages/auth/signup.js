@@ -1,24 +1,20 @@
 import { useState } from "react";
 import axios from "axios";
 
-import useRequest from '../../hooks/use-request'
+import useRequest from "../../hooks/use-request";
 
 export default () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState([]);
+  const { doRequest, errors } = useRequest({
+    url: "/api/users/signup",
+    method: "post",
+    body: { email, password },
+  });
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post("/api/users/signup", {
-        email,
-        password,
-      });
-      console.log(response.data);
-    } catch (error) {
-      setErrors(error.response.data.errors);
-    }
+    doRequest();
   };
 
   return (
@@ -42,9 +38,7 @@ export default () => {
           className="form-control"
         />
       </div>
-      {errors.length > 0 && (
-        
-      )}
+      {errors}
       <button className="btn btn-primary">Sign Up</button>
     </form>
   );
