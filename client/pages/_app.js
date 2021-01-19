@@ -1,5 +1,14 @@
 import "bootstrap/dist/css/bootstrap.css";
+import buildClient from "../api/build-client";
 
-export default ({ Component, pageProps }) => {
+const AppComponent = ({ Component, pageProps }) => {
   return <Component {...pageProps} />;
 };
+
+AppComponent.getInitialProps = () => {
+  const client = buildClient(context);
+  const { data } = await client.get("/api/users/currentuser");
+  return data;
+};
+
+export default AppComponent;
