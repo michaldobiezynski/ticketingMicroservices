@@ -5,8 +5,9 @@ const AppComponent = ({ Component, pageProps }) => {
   return <Component {...pageProps} />;
 };
 
-AppComponent.getInitialProps = () => {
-  const client = buildClient(context);
+AppComponent.getInitialProps = async (appContext) => {
+  console.log(appContext);
+  const client = buildClient(appContext.ctx);
   const { data } = await client.get("/api/users/currentuser");
   return data;
 };
