@@ -8,7 +8,7 @@ it("returns a 404 if the ticket is not found", async () => {
     .get("/api/tickets/sadfasdfgdsfgerfr")
     .send({});
 
-  expect(response.status).not.toEqual(404);
+  expect(response.status).toEqual(404);
 });
 it("it returns the ticket if the ticket is found", async () => {
   const title = "concert";
