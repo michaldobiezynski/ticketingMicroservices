@@ -23,8 +23,6 @@ router.put(
   ],
   validateRequest,
   async (req: Request, res: Response) => {
-    const { title, price } = req.body;
-
     const ticket = await Ticket.findById(req.params.id);
 
     if (!ticket) {
@@ -35,7 +33,9 @@ router.put(
       throw new NotAuthorisedError();
     }
 
-    ticket.set({ title, price });
+    ticket.title = req.body.title;
+    ticket.price = req.body.price;
+
     await ticket.save();
 
     res.send(ticket);
