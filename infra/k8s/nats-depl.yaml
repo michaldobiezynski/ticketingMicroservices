@@ -6,7 +6,7 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      apps: nats
+      app: nats
   template:
     metadata:
       labels:
@@ -31,11 +31,10 @@ spec:
               "-cid",
               "ticketing",
             ]
-
 ---
 apiVersion: v1
 kind: Service
-metadate:
+metadata:
   name: nats-srv
 spec:
   selector:
