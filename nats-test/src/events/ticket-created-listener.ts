@@ -7,6 +7,8 @@ export class TicketCreatedListener extends Listener {
   onMessage(data: any, msg: Message) {
     console.log("Event data!", data);
 
+    console.log(data.name);
+    console.log(data.cost);
     msg.ack();
   }
 }
