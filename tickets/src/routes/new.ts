@@ -7,6 +7,7 @@ import {
   validateRequest,
   BadRequestError,
 } from "@michaldobiezynski_tickets/common";
+import { TicketCreatedPublisher } from "../events/publishers/ticket-created-publisher";
 
 const router = express.Router();
 
@@ -30,6 +31,13 @@ router.post(
     });
 
     await ticket.save();
+
+    await new TicketCreatedPublisher(client).publish({
+      id: title.id,
+      title: ticket.title,
+      price: ticket.price,
+      userId: ticket.userId,
+    });
 
     res.status(201).send(ticket);
   }
