@@ -1,3 +1,4 @@
+import { natsWrapper } from "./../nats-wrapper";
 import express, { Request, Response } from "express";
 import { requireAuth } from "@michaldobiezynski_tickets/common";
 import { body } from "express-validator";
@@ -32,7 +33,7 @@ router.post(
 
     await ticket.save();
 
-    await new TicketCreatedPublisher(client).publish({
+    await new TicketCreatedPublisher(natsWrapper.client).publish({
       id: title.id,
       title: ticket.title,
       price: ticket.price,
