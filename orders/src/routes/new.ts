@@ -1,4 +1,4 @@
-import { mongoose } from "mongoose";
+import mongoose from "mongoose";
 import { body } from "express-validator";
 import {
   requireAuth,
