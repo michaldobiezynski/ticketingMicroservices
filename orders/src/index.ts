@@ -39,7 +39,7 @@ const start = async () => {
       useUnifiedTopology: true,
       useCreateIndex: true,
     });
-    console.log("Connected to tickets db");
+    console.log("Connected to orders db");
   } catch (error) {
     console.error(error);
   }
