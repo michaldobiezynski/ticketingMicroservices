@@ -1,5 +1,3 @@
-import { OrderCancelledPublished } from "./../events/publishers/order-cancelled-publisher";
-import { OrderCreatedPublished } from "./../events/publishers/order-created-publisher";
 import mongoose from "mongoose";
 import { body } from "express-validator";
 import {
@@ -12,6 +10,7 @@ import {
 import express, { Request, Response } from "express";
 import { Ticket } from "../models/ticket";
 import { Order } from "../models/order";
+import { OrderCreatedPublished } from "./../events/publishers/order-created-publisher";
 import { natsWrapper } from "../nats-wrapper";
 
 const router = express.Router();
