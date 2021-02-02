@@ -8,7 +8,7 @@ import { Ticket } from "../models/ticket";
 import { Order, OrderStatus } from "../models/order";
 const router = express.Router();
 
-router.post(
+router.delete(
   "/api/orders/:orderId",
   requireAuth,
   async (req: Request, res: Response) => {
@@ -25,7 +25,7 @@ router.post(
     order.status = OrderStatus.Cancelled;
     await order.save();
 
-    res.send(order);
+    res.status(204).send(order);
   }
 );
 
