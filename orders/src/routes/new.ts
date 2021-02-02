@@ -1,3 +1,5 @@
+import { OrderCancelledPublished } from "./../events/publishers/order-cancelled-publisher";
+import { OrderCreatedPublished } from "./../events/publishers/order-created-publisher";
 import mongoose from "mongoose";
 import { body } from "express-validator";
 import {
@@ -10,6 +12,7 @@ import {
 import express, { Request, Response } from "express";
 import { Ticket } from "../models/ticket";
 import { Order } from "../models/order";
+import { natsWrapper } from "../nats-wrapper";
 
 const router = express.Router();
 
@@ -61,6 +64,16 @@ router.post(
     await order.save();
 
     // Publish an event saying that an order was created
+    new OrderCreatedPublished(natsWrapper.client).publish({
+      id: order.id,
+      status: OrderStatus.Created,
+      userID: order.userId,
+      expiresAt: order.expiresAt.toISOString(),
+      ticket: {
+        id: ticket.id,
+        price: ticket.price,
+      },
+    });
 
     res.status(201).send(order);
   }
