@@ -5,11 +5,10 @@ import {
 } from "@michaldobiezynski_tickets/common";
 import { Message } from "node-nats-streaming";
 import { Ticket } from "../../models/ticket";
+import { queueGroupName } from "./queue-group-name";
 
 export class TicketCreatedListener extends Listener<TicketCreatedEvent> {
   subject: Subjects.TicketCreated = Subjects.TicketCreated;
-  queueGroupName = "orders-service";
-  onMessage(data: TicketCreatedEvent["data"], msg: Message) {
-      
-  }
+  queueGroupName = queueGroupName;
+  onMessage(data: TicketCreatedEvent["data"], msg: Message) {}
 }
