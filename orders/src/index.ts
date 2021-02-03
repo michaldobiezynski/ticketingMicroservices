@@ -1,4 +1,3 @@
-import { TicketCreatedListener } from "./../../nats-test/src/events/ticket-created-listener";
 import { TicketCreatedListener } from "./events/listeners/ticket-created-listener";
 import { TicketUpdatedListener } from "./events/listeners/ticket-updated-listener";
 import { natsWrapper } from "./nats-wrapper";
