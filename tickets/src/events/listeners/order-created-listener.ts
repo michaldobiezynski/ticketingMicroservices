@@ -1,3 +1,4 @@
+import { TicketUpdatedPublisher } from "./../publishers/ticket-updated-publisher";
 import { Message } from "node-nats-streaming";
 import { queueGroupName } from "./queue-group-name";
 import {
@@ -24,6 +25,8 @@ export class OrderCreatedListener extends Listener<OrderCreatedEvent> {
 
     // Save the ticket
     await ticket.save();
+
+    new TicketUpdatedPublisher()
 
     // ack the message
     msg.ack();
