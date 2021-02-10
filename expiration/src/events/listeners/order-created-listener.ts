@@ -5,15 +5,16 @@ import {
   OrderCreatedEvent,
   Subjects,
 } from "@michaldobiezynski_tickets/common";
+import { expirationQueue } from "../../queues/expiration-queue";
 
 export class OrderCreatedListener extends Listener<OrderCreatedEvent> {
   subject: Subjects.OrderCreated = Subjects.OrderCreated;
   queueGroupName = queueGroupName;
   async onMessage(data: OrderCreatedEvent["data"], msg: Message) {
-    // Find the ticket that the order is reserving
+    await expirationQueue.add({
+      orderId: data.id,
+    });
 
-    // ack the message
     msg.ack();
   }
 }
-
