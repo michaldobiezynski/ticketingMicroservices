@@ -10,35 +10,26 @@ import { Ticket } from "../../../models/ticket";
 import { Order } from "../../../models/order";
 
 const setup = async () => {
-  // create an instance of the listener
   const listener = new ExpirationCompleteListener(natsWrapper.client);
 
   const ticket = Ticket.build({
-    id: new mongoose.Types.ObjectId().toHexString(),
+    id: mongoose.Types.ObjectId().toHexString(),
     title: "concert",
     price: 20,
   });
-
   await ticket.save();
-
   const order = Order.build({
-    ticket,
-    userId: new mongoose.Types.ObjectId().toHexString(),
     status: OrderStatus.Created,
+    userId: "alskdfj",
     expiresAt: new Date(),
+    ticket,
   });
-
   await order.save();
 
-  // create a fake data event
   const data: ExpirationComplete["data"] = {
-    id: new mongoose.Types.ObjectId().toHexString(),
-    title: "concert",
-    price: 10,
-    userId: new mongoose.Types.ObjectId().toHexString(),
+    orderId: order.id,
   };
 
-  // create a fake message object
   // @ts-ignore
   const msg: Message = {
     ack: jest.fn(),
@@ -48,17 +39,16 @@ const setup = async () => {
 };
 
 it("updates the order status to cancelled", async () => {
-  const { listener, data, msg, order, ticket } = await setup();
+  const { listener, order, data, msg } = await setup();
 
   await listener.onMessage(data, msg);
 
   const updatedOrder = await Order.findById(order.id);
-
   expect(updatedOrder!.status).toEqual(OrderStatus.Cancelled);
 });
 
 it("emit an OrderCancelled event", async () => {
-  const { data, listener, msg, order } = await setup();
+  const { listener, order, data, msg } = await setup();
 
   await listener.onMessage(data, msg);
 
@@ -67,15 +57,13 @@ it("emit an OrderCancelled event", async () => {
   const eventData = JSON.parse(
     (natsWrapper.client.publish as jest.Mock).mock.calls[0][1]
   );
-
   expect(eventData.id).toEqual(order.id);
 });
-it("ack the message", async () => {
-  const { data, listener, msg } = await setup();
 
-  // call the onMessage function with the data object + message object
+it("ack the message", async () => {
+  const { listener, data, msg } = await setup();
+
   await listener.onMessage(data, msg);
 
-  // write assertions to make sure ack function was called
   expect(msg.ack).toHaveBeenCalled();
 });
