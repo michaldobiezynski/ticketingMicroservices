@@ -7,7 +7,7 @@ export interface OrderCreatedEvent {
     id: string;
     version: number;
     status: OrderStatus.Created;
-    userID: string;
+    userId: string;
     expiresAt: string;
     ticket: {
       id: string;

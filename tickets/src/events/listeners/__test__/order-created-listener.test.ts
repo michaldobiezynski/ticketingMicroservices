@@ -26,7 +26,7 @@ const setup = async () => {
     id: new mongoose.Types.ObjectId().toHexString(),
     version: 0,
     status: OrderStatus.Created,
-    userID: "asdfghj",
+    userId: "asdfghj",
     expiresAt: "asdfghjkk",
     ticket: {
       id: ticket.id,
