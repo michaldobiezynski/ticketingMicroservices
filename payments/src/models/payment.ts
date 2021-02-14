@@ -16,11 +16,11 @@ interface PaymentModel extends mongoose.Model<PaymentDoc> {
 
 const paymentSchema = new mongoose.Schema(
   {
-    orderID: {
+    orderId: {
       required: true,
       type: String,
     },
-    stripedId: {
+    stripeId: {
       required: true,
       type: String,
     },

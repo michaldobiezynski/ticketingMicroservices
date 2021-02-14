@@ -58,7 +58,7 @@ it("returns a 400 when purchasing an cancelled order", async () => {
     .expect(400);
 });
 
-it("returns a 201 wiht valid inputs", async () => {
+it("returns a 201 with valid inputs", async () => {
   const userId = mongoose.Types.ObjectId().toHexString();
 
   const order = Order.build({
