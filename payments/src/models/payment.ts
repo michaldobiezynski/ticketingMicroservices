@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-interface PaymentsAttrs {
+interface PaymentAttrs {
   orderId: string;
   stripeId: string;
 }
@@ -11,7 +11,7 @@ interface PaymentDoc extends mongoose.Document {
 }
 
 interface PaymentModel extends mongoose.Model<PaymentDoc> {
-  build(attrs: PaymentsAttrs): PaymentDoc;
+  build(attrs: PaymentAttrs): PaymentDoc;
 }
 
 const paymentSchema = new mongoose.Schema(
@@ -35,7 +35,7 @@ const paymentSchema = new mongoose.Schema(
   }
 );
 
-paymentSchema.statics.build = (attrs: PaymentsAttrs) => {
+paymentSchema.statics.build = (attrs: PaymentAttrs) => {
   return new Payment(attrs);
 };
 
