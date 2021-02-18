@@ -16,6 +16,10 @@ const OrderShow = ({ order }) => {
     };
   }, []);
 
+  if (timeLeft < 0) {
+    return <div>Order Expired</div>;
+  }
+
   return <div>{timeLeft} seconds until order expires</div>;
 };
 
